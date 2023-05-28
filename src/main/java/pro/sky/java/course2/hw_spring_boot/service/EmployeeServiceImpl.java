@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Integer getSalarySum() {
+    public Double getSalarySum() {
         return employeeRepository.getSalarySum();
     }
 

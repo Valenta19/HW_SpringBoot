@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface EmployeeService {
     List<Employee> getAllEmployees();
 
-    Integer getSalarySum();
+    Double getSalarySum();
 
     Optional<Integer> getMinSalary();
 

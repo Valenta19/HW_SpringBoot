@@ -19,10 +19,10 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
     }
 
     @Override
-    public Integer getSalarySum() {
+    public Double getSalarySum() {
         return employees.stream()
-                .map(Employee::getSalary)
-                .reduce(0, Integer::sum);
+                .mapToDouble(Employee::getSalary)
+                .sum();
     }
 
     @Override
