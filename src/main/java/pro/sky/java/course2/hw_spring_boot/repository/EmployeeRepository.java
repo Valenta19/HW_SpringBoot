@@ -7,11 +7,5 @@ import java.util.Optional;
 public interface EmployeeRepository {
     List<Employee> getAllEmployees();
 
-    Double getSalarySum();
 
-    Optional<Integer> getMinSalary();
-
-    Optional<Integer> getMaxSalary();
-
-    List<Employee> getAllEmployeesWithSalaryHigherThenAvg();
 }

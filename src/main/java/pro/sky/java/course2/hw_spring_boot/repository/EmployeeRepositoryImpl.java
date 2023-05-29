@@ -13,37 +13,9 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
             new Employee("Jack", 40_000),
             new Employee("Harry", 50_000),
             new Employee("Jacob", 55_000));
+
     @Override
     public List<Employee> getAllEmployees() {
         return employees;
-    }
-
-    @Override
-    public Double getSalarySum() {
-        return employees.stream()
-                .mapToDouble(Employee::getSalary)
-                .sum();
-    }
-
-    @Override
-    public Optional<Integer> getMinSalary() {
-        return employees.stream()
-                .map(Employee::getSalary)
-                .min(Comparator.naturalOrder());
-    }
-
-    @Override
-    public Optional<Integer> getMaxSalary() {
-
-        return employees.stream()
-                .map(Employee::getSalary)
-                .max(Comparator.naturalOrder());
-    }
-
-    @Override
-    public List<Employee> getAllEmployeesWithSalaryHigherThenAvg() {
-        return employees.stream()
-                .filter(employee -> employee.getSalary() > getSalarySum() / employees.size())
-                .toList();
     }
 }

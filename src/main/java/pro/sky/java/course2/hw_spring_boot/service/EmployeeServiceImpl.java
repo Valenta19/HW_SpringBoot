@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pro.sky.java.course2.hw_spring_boot.pojo.Employee;
 import pro.sky.java.course2.hw_spring_boot.repository.EmployeeRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,26 +19,35 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public List<Employee> getAllEmployees() {
-        return employeeRepository.getAllEmployees();
+        return getAllEmployees();
     }
 
     @Override
     public Double getSalarySum() {
-        return employeeRepository.getSalarySum();
+        return employeeRepository.getAllEmployees().stream()
+                .mapToDouble(Employee::getSalary)
+                .sum();
     }
 
     @Override
     public Optional<Integer> getMinSalary() {
-        return employeeRepository.getMinSalary();
+        return employeeRepository.getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .min(Comparator.naturalOrder());
     }
 
     @Override
     public Optional<Integer> getMaxSalary() {
-        return employeeRepository.getMaxSalary();
+
+        return employeeRepository.getAllEmployees().stream()
+                .map(Employee::getSalary)
+                .max(Comparator.naturalOrder());
     }
 
     @Override
     public List<Employee> getAllEmployeesWithSalaryHigherThenAvg() {
-        return employeeRepository.getAllEmployeesWithSalaryHigherThenAvg();
+        return employeeRepository.getAllEmployees().stream()
+                .filter(employee -> employee.getSalary() > getSalarySum() / employeeRepository.getAllEmployees().size())
+                .toList();
     }
 }
