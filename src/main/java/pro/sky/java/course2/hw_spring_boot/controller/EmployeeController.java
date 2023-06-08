@@ -17,22 +17,22 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
     @GetMapping("/salary/all")
-    public List<Employee> All() {
+    public List<Employee> all() {
         return employeeService.getAllEmployees();
     }
 
     @GetMapping("/salary/sum")
-    public Double Sum() {
+    public Double sum() {
         return employeeService.getSalarySum();
     }
 
     @GetMapping("/salary/min")
-    public Optional<Integer> Min() {
+    public Optional<Integer> min() {
         return employeeService.getMinSalary();
     }
 
     @GetMapping("/salary/max")
-    public Optional<Integer> Max() {
+    public Optional<Integer> max() {
         return employeeService.getMaxSalary();
     }
 
