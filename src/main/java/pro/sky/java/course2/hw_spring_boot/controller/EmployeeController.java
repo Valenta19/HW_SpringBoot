@@ -10,7 +10,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
-    private final EmployeeService employeeService;
+    private final EmployeeService
+            employeeService;
 
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
@@ -40,25 +41,25 @@ public class EmployeeController {
         return employeeService.getAllEmployeesWithSalaryHigherThenAvg();
     }
 
-    @GetMapping("get/{id}")
-    public List<Employee>getEmployeeById(@PathVariable Integer id) {
+    @GetMapping("/{id}")
+    public Optional<Employee>getEmployeeById(@PathVariable Integer id) {
         return employeeService.getEmployeeById(id);
     }
 
-    @PostMapping("/add")
-    public List<Employee>  Add(@RequestBody Employee employee) {
-        return employeeService.addEmployee(employee);
+    @PostMapping("/")
+    public void add(@RequestBody Employee employee) {
+         employeeService.addEmployee(employee);
     }
 
-    @PutMapping("update/{id}")
-    public List<Employee> EditEmployee(@RequestBody Employee employee, @PathVariable Integer id) {
+    @PutMapping("/{id}")
+    public List<Employee> editEmployee(@RequestBody Employee employee, @PathVariable Integer id) {
         return employeeService.updateEmployee(employee,id);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/{id}")
 
-    public List<Employee> DeleteEmployee(@PathVariable Integer id) {
-        return employeeService.deleteEmployeeById(id);
+    public void deleteEmployee(@PathVariable Integer id) {
+       employeeService.deleteEmployeeById(id);
     }
     @GetMapping("/salaryHigher")
     public List<Employee> salaryHigherThan(@RequestParam("salary") Integer salary) {

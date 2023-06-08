@@ -16,13 +16,13 @@ public interface EmployeeService {
 
     List<Employee> getAllEmployeesWithSalaryHigherThenAvg();
 
-    List<Employee> addEmployee(Employee employee);
+    void addEmployee(Employee employee);
 
     List<Employee> updateEmployee(Employee employee, int id);
 
-    List<Employee> getEmployeeById(int id);
+    Optional<Employee> getEmployeeById(int id);
 
-    List<Employee> deleteEmployeeById(int id);
+    void deleteEmployeeById(int id);
 
     List<Employee> allEmployeesWithHigherSalaries(int salary);
 }
