@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
@@ -52,9 +52,10 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public void addEmployee(Employee employee) {
-        employeeRepository.addEmployee(employee);
+    public List<Employee> addEmployee(Employee employee) {
+        return employeeRepository.addEmployee(employee);
     }
+
 
     @Override
     public List<Employee> updateEmployee(Employee employee, int id) {
@@ -63,13 +64,14 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public Optional<Employee> getEmployeeById(int id) {
-       return employeeRepository.getEmployeeById(id);
+        return employeeRepository.getEmployeeById(id);
     }
 
     @Override
     public void deleteEmployeeById(int id) {
         employeeRepository.deleteEmployeeById(id);
     }
+
     @Override
     public List<Employee> allEmployeesWithHigherSalaries(int salary) {
         return employeeRepository.getAllEmployees().stream()

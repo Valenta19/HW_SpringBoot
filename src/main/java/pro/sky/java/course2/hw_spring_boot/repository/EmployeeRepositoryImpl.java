@@ -19,10 +19,10 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
     }
 
     @Override
-    public void addEmployee(Employee employee) {
+    public List<Employee> addEmployee(Employee employee) {
         List<Employee> list = new ArrayList<>(employees);
-        list.add(employee);
-
+        employees.add(employee);
+        return list;
     }
 
     @Override

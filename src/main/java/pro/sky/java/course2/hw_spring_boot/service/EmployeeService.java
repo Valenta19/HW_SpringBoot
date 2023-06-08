@@ -16,7 +16,7 @@ public interface EmployeeService {
 
     List<Employee> getAllEmployeesWithSalaryHigherThenAvg();
 
-    void addEmployee(Employee employee);
+    List<Employee> addEmployee(Employee employees);
 
     List<Employee> updateEmployee(Employee employee, int id);
 

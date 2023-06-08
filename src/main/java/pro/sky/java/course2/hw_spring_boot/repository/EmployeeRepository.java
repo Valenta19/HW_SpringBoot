@@ -7,12 +7,11 @@ import java.util.Optional;
 
 public interface EmployeeRepository {
     List<Employee> getAllEmployees();
-
-    void addEmployee(Employee employee);
+    List<Employee> addEmployee(Employee employees);
 
     List<Employee> updateEmployee(Employee employee, int id);
 
     Optional<Employee> getEmployeeById(int id);
 
-    void deleteEmployeeById  (int id);
+    void deleteEmployeeById(int id);
 }

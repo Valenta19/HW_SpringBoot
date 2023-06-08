@@ -46,10 +46,11 @@ public class EmployeeController {
         return employeeService.getEmployeeById(id);
     }
 
-    @PostMapping("/")
-    public void add(@RequestBody Employee employee) {
-         employeeService.addEmployee(employee);
+    @PostMapping
+    public List<Employee>  Add(@RequestBody Employee employee) {
+        return employeeService.addEmployee(employee);
     }
+
 
     @PutMapping("/{id}")
     public List<Employee> editEmployee(@RequestBody Employee employee, @PathVariable Integer id) {
