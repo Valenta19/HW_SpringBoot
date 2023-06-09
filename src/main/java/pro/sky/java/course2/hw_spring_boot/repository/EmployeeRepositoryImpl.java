@@ -7,12 +7,13 @@ import java.util.*;
 
 @Repository
 public class EmployeeRepositoryImpl implements EmployeeRepository{
-    private final List<Employee> employees = List.of(new Employee( 1,"Charley", 45_000),
-            new Employee(2,"Oliver", 75_000),
-            new Employee(3,"Jack", 40_000),
-            new Employee(4,"Harry", 50_000),
-            new Employee(5,"Jacob", 55_000));
-    private final HashMap<Integer, Employee> employeeDelete = new HashMap<>();
+//    private final List<Employee> employees = List.of(new Employee( 1,"Charley", 45_000),
+//            new Employee(2,"Oliver", 75_000),
+//            new Employee(3,"Jack", 40_000),
+//            new Employee(4,"Harry", 50_000),
+//            new Employee(5,"Jacob", 55_000));
+    private final List<Employee> employees = new ArrayList<>();
+
     @Override
     public List<Employee> getAllEmployees() {
         return employees;
@@ -20,9 +21,8 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
 
     @Override
     public List<Employee> addEmployee(Employee employee) {
-        List<Employee> list = new ArrayList<>(employees);
         employees.add(employee);
-        return list;
+        return employees;
     }
 
     @Override
@@ -45,6 +45,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepository{
 
     @Override
     public void deleteEmployeeById(int id) {
-        employeeDelete.remove(id);
+        employees.removeIf(employee -> employee.getId() == id);
     }
 }
