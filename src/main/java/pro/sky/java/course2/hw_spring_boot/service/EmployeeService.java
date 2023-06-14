@@ -1,5 +1,6 @@
 package pro.sky.java.course2.hw_spring_boot.service;
 
+import pro.sky.java.course2.hw_spring_boot.dto.EmployeeDTO;
 import pro.sky.java.course2.hw_spring_boot.pojo.Employee;
 
 import java.util.List;
@@ -16,13 +17,19 @@ public interface EmployeeService {
 
     List<Employee> getAllEmployeesWithSalaryHigherThenAvg();
 
-    List<Employee> addEmployee(Employee employees);
+    List<Employee> addEmployee(Employee employee);
 
-    List<Employee> updateEmployee(Employee employee, int id);
+    List<Employee> updateEmployee(Employee employee);
 
-    Optional<Employee> getEmployeeById(int id);
+    List<EmployeeDTO> getEmployeeById(int id);
 
     void deleteEmployeeById(int id);
 
-    List<Employee> allEmployeesWithHigherSalaries(int salary);
+    List<EmployeeDTO> getAllEmployeesWithSalaryHigherThan(int salary);
+
+    List<EmployeeDTO> getAllEmployeesWithMatchingPosition(String position);
+
+    List<EmployeeDTO> getEmployeeFullInfo(int id);
+
+    List<EmployeeDTO> getEmployeesInPageFormat(int page);
 }

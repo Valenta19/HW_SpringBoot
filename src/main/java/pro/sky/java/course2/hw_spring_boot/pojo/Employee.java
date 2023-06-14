@@ -1,46 +1,58 @@
 package pro.sky.java.course2.hw_spring_boot.pojo;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "employees")
 public class Employee {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
     private int salary;
+    @ManyToOne
+    private Position position;
 
-    public Employee(int id, String name, int salary) {
-        this.id = id;
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Employee(String name, int salary) {
         this.name = name;
         this.salary = salary;
+
     }
 
-    public int getId() {
-        return id;
-    }
+    public Employee() {
 
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public int getSalary() {
         return salary;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setSalary(int salary) {
         this.salary = salary;
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", salary=" + salary +
-                '}';
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
