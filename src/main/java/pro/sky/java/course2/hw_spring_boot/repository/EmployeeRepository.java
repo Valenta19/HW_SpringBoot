@@ -17,15 +17,17 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Query(value = "SELECT SUM(salary) " +
             "FROM employees",
             nativeQuery = true)
-    Integer getSalarySum();
+    Double getSalarySum();
 
     @Query(value = "SELECT MIN(salary) " +
             "FROM employees", nativeQuery = true)
     Optional<Integer> getMinSalary();
 
-    @Query(value = "SELECT MAX(salary) " +
-            "FROM employees", nativeQuery = true)
-    Optional<Integer> getMaxSalary();
+    @Query(value = "SELECT employees.id, name, salary, position_id FROM employees" +
+            " WHERE employees.salary = (SELECT MAX(employees.salary) from  employees)",
+            nativeQuery = true)
+List<Employee> getMaxSalary();
+
 
     @Query(value = "SELECT * FROM employees " +
             "WHERE salary >(SELECT AVG (salary) FROM employees)",

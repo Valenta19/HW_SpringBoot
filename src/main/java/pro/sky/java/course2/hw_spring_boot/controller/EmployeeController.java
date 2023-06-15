@@ -32,12 +32,6 @@ public class EmployeeController {
     public Optional<Integer> Min() {
         return employeeService.getMinSalary();
     }
-
-    @GetMapping("/salary/max")
-    public Optional<Integer> max() {
-        return employeeService.getMaxSalary();
-    }
-
     @GetMapping("/high-salary")
     public List<Employee> highSalary() {
         return employeeService.getAllEmployeesWithSalaryHigherThenAvg();
@@ -71,7 +65,7 @@ public class EmployeeController {
     }
 
     @GetMapping("withHighestSalary")
-    public Optional<Integer> showMax() {
+    public List<Employee> showMax() {
         return employeeService.getMaxSalary();
     }
 

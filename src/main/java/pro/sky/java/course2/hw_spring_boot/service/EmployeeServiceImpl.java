@@ -7,7 +7,6 @@ import pro.sky.java.course2.hw_spring_boot.pojo.Employee;
 import pro.sky.java.course2.hw_spring_boot.repository.EmployeeRepository;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,24 +28,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Double getSalarySum() {
-        return employeeRepository.getAllEmployees().stream()
-                .mapToDouble(Employee::getSalary)
-                .sum();
+        return employeeRepository.getSalarySum();
     }
 
     @Override
     public Optional<Integer> getMinSalary() {
-        return employeeRepository.getAllEmployees().stream()
-                .map(Employee::getSalary)
-                .min(Comparator.naturalOrder());
+        return employeeRepository.getMinSalary();
     }
 
     @Override
-    public Optional<Integer> getMaxSalary() {
-
-        return employeeRepository.getAllEmployees().stream()
-                .map(Employee::getSalary)
-                .max(Comparator.naturalOrder());
+    public List<Employee> getMaxSalary() {
+        return employeeRepository.getMaxSalary();
     }
 
     @Override
