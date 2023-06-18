@@ -1,10 +1,13 @@
 package pro.sky.java.course2.hw_spring_boot.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pro.sky.java.course2.hw_spring_boot.dto.EmployeeDTO;
 import pro.sky.java.course2.hw_spring_boot.pojo.Employee;
 import pro.sky.java.course2.hw_spring_boot.service.EmployeeService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,6 +87,11 @@ public class EmployeeController {
     public List<EmployeeDTO> getEmployeesInPageFormat(@RequestParam(required = false,defaultValue = "0") int page) {
 
         return employeeService.getEmployeesInPageFormat(page);
+
+    }
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void upload(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        employeeService.saveEmployeeFromJson(multipartFile);
 
     }
 }

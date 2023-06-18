@@ -1,11 +1,15 @@
 package pro.sky.java.course2.hw_spring_boot.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import pro.sky.java.course2.hw_spring_boot.dto.EmployeeDTO;
 import pro.sky.java.course2.hw_spring_boot.pojo.Employee;
 import pro.sky.java.course2.hw_spring_boot.repository.EmployeeRepository;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -98,6 +102,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findAll(PageRequest.of(page, 10)).stream()
                 .map((Object employee) -> EmployeeDTO.fromEmployee((Employee) employee))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveEmployeeFromJson(MultipartFile file) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        List<Employee> employees = objectMapper.readValue(file.getBytes(), new TypeReference<>() {
+        });
+        employeeRepository.saveAll(employees);
     }
 
 

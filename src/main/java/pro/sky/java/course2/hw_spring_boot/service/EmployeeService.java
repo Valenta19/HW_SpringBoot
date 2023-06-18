@@ -1,8 +1,10 @@
 package pro.sky.java.course2.hw_spring_boot.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import pro.sky.java.course2.hw_spring_boot.dto.EmployeeDTO;
 import pro.sky.java.course2.hw_spring_boot.pojo.Employee;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,4 +34,5 @@ public interface EmployeeService {
     List<EmployeeDTO> getEmployeeFullInfo(int id);
 
     List<EmployeeDTO> getEmployeesInPageFormat(int page);
+    void saveEmployeeFromJson(MultipartFile file) throws IOException;
 }
