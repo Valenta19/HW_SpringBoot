@@ -17,7 +17,6 @@ public class AdminEmployeeController {
     private final EmployeeService
             employeeService;
 
-
     public AdminEmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
