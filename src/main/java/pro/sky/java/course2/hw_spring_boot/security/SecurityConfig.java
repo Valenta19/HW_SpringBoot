@@ -40,7 +40,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/*"))
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/**"))
                 .authorizeHttpRequests(this::customizeRequest)
                 .formLogin(Customizer.withDefaults())
                 .logout(Customizer.withDefaults());
@@ -51,7 +51,7 @@ public class SecurityConfig {
             AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry registry) {
         try {
             registry.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasAnyRole("ADMIN")
-                    .requestMatchers(new AntPathRequestMatcher("/**")).hasAnyRole("USER");
+                    .requestMatchers(new AntPathRequestMatcher("/**")).hasAnyRole("USER", "ADMIN");
 
         } catch (Exception e) {
             throw new RuntimeException(e);
