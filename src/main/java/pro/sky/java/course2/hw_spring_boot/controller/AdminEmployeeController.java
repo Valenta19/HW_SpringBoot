@@ -1,19 +1,23 @@
 package pro.sky.java.course2.hw_spring_boot.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pro.sky.java.course2.hw_spring_boot.dto.EmployeeDTO;
 import pro.sky.java.course2.hw_spring_boot.pojo.Employee;
 import pro.sky.java.course2.hw_spring_boot.service.EmployeeService;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/employee")
-public class EmployeeController {
+@RequestMapping("admin/employee")
+public class AdminEmployeeController {
     private final EmployeeService
             employeeService;
-    public EmployeeController(EmployeeService employeeService) {
+
+    public AdminEmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
@@ -42,6 +46,22 @@ public class EmployeeController {
         return employeeService.getEmployeeById(id);
     }
 
+    @PostMapping
+    public List<Employee> Add(@RequestBody Employee employee) {
+        return employeeService.addEmployee(employee);
+    }
+
+
+    @PutMapping("/{id}")
+    public List<Employee> editEmployee(@RequestBody Employee employee, @PathVariable Integer id) {
+        return employeeService.updateEmployee(employee);
+    }
+
+    @DeleteMapping("/{id}")
+
+    public void deleteEmployee(@PathVariable Integer id) {
+        employeeService.deleteEmployeeById(id);
+    }
 
     @GetMapping("/salaryHigher")
     public List<EmployeeDTO> salaryHigherThan(@RequestParam("salary") Integer salary) {
@@ -71,4 +91,9 @@ public class EmployeeController {
 
     }
 
+    @PostMapping(value = "/upload" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void upload(@RequestParam("file") MultipartFile multipartFile) throws IOException {
+        employeeService.saveEmployeeFromJson(multipartFile);
+
+    }
 }
