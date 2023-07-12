@@ -18,7 +18,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
-
     
     @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource,

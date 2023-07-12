@@ -9,7 +9,6 @@ databaseChangeLog:
               - column: # колонка
                   name: username # название колонки
                   type: varchar(250) # тип
-                  autoIncrement: true # признак автоинкремента колонки
                   constraints: # ограничения колонки
                     primaryKey: true
               - column:
