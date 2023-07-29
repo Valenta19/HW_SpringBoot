@@ -3,6 +3,7 @@ package pro.sky.java.course2.hw_spring_boot.dto;
 import pro.sky.java.course2.hw_spring_boot.pojo.Employee;
 import pro.sky.java.course2.hw_spring_boot.pojo.Position;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class EmployeeDTO {
@@ -56,5 +57,19 @@ public class EmployeeDTO {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmployeeDTO that = (EmployeeDTO) o;
+        return salary == that.salary && Objects.equals(name, that.name) && Objects.equals(position, that.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, salary, position);
+
     }
 }

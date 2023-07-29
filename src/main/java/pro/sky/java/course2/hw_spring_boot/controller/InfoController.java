@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/info")
 public class InfoController {
+        @Value("${app.env}")
+        String appInfo;
 
-    @Value("${app.env}")
-    String appInfo;
-
-    @GetMapping("/appInfo")
-    public String getAppInfo() {
-        return appInfo;
+        @GetMapping("/appInfo")
+        public String getAppInfo() {
+            return appInfo;
+        }
     }
-}

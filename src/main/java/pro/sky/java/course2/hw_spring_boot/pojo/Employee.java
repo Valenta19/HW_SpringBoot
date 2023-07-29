@@ -2,17 +2,42 @@ package pro.sky.java.course2.hw_spring_boot.pojo;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "employees")
-public class Employee {
+public class Employee implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     private String name;
     private int salary;
+
+    @Column(name = "position_id",insertable=false, updatable=false)
+    private int positionId;
     @ManyToOne
+    @JoinColumn(name = "position_id")
     private Position position;
+
+    public Employee() {
+    }
+
+    public Employee(int id, String name, int salary, int positionId, Position position) {
+        this.id = id;
+        this.name = name;
+        this.salary = salary;
+        this.positionId = positionId;
+        this.position = position;
+    }
+
+    public int getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(int positionId) {
+        this.positionId = positionId;
+    }
 
     public Position getPosition() {
         return position;
@@ -20,16 +45,6 @@ public class Employee {
 
     public void setPosition(Position position) {
         this.position = position;
-    }
-
-    public Employee(String name, int salary) {
-        this.name = name;
-        this.salary = salary;
-
-    }
-
-    public Employee() {
-
     }
 
     public String getName() {
