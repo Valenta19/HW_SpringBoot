@@ -38,22 +38,24 @@ public class EmployeeServiceImplTest {
 
     @Test
     public void shouldReturnCollectionOfAllEmployees() {
+        out.getAllEmployees();
         when(mockRepository.getAllEmployees()).thenReturn(EMPLOYEE);
-        assertIterableEquals(EMPLOYEE, mockRepository.getAllEmployees());
+        assertIterableEquals(EMPLOYEE, out.getAllEmployees());
     }
 
     @Test
     public void shouldReturnSalarySum() {
-
+        out.getSalarySum();
         Double testSalary = Double.valueOf(EMPLOYEE.stream()
                 .map(Employee::getSalary)
                 .reduce(0, Integer::sum));
 
-        assertEquals(testSalary, mockRepository.getSalarySum());
+        assertEquals(testSalary, out.getSalarySum());
     }
 
     @Test
     public void shouldReturnMinSalary() {
+        out.getMinSalary();
         Optional<Integer> testMinSalary = EMPLOYEE.stream()
                 .map(Employee::getSalary)
                 .min(Comparator.naturalOrder());
@@ -63,6 +65,7 @@ public class EmployeeServiceImplTest {
 
     @Test
     public void shouldReturnMaxSalary() {
+        out.getMaxSalary();
         Optional<Integer> testMaxSalary = EMPLOYEE.stream()
                 .map(Employee::getSalary)
                 .max(Comparator.naturalOrder());
@@ -72,11 +75,12 @@ public class EmployeeServiceImplTest {
 
     @Test
     public void shouldReturnEmployeesWithSalaryHigherThenAvg() {
+        out.getAllEmployeesWithSalaryHigherThenAvg();
         List<Employee> list = EMPLOYEE.stream()
                 .filter(employee -> employee.getSalary() > mockRepository.getSalarySum() / EMPLOYEE.size())
                 .toList();
 
-        assertIterableEquals(list, mockRepository.getAllEmployeesWithSalaryHigherThenAvg());
+        assertIterableEquals(list, out.getAllEmployeesWithSalaryHigherThenAvg());
     }
 
     @Test
@@ -103,19 +107,21 @@ public class EmployeeServiceImplTest {
     @Test
     public void shouldReturnAllEmployeesWithSalaryHigherThan() {
         int salary = 10000;
+        out.getAllEmployeesWithSalaryHigherThan(salary);
         List<Employee> list = EMPLOYEE.stream()
                 .filter(employee -> employee.getSalary() > salary)
                 .toList();
-        assertIterableEquals(list, mockRepository.getAllEmployeesWithSalaryHigherThan(salary));
+        assertIterableEquals(list, out.getAllEmployeesWithSalaryHigherThan(salary));
     }
 
     @Test
     public void shouldReturnAllEmployeesWithMatchingPosition() {
         int position = 1;
+        out.getAllEmployeesWithMatchingPosition(Integer.toString(position));
         List<Employee> list = EMPLOYEE.stream()
                 .filter(employee -> employee.getPositionId() == position)
                 .toList();
-        assertIterableEquals(list, mockRepository.getAllEmployeesWithMatchingPosition(Integer.toString(position)));
+        assertIterableEquals(list, out.getAllEmployeesWithMatchingPosition(Integer.toString(position)));
     }
 
     @Test

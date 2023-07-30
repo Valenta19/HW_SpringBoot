@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pro.sky.java.course2.hw_spring_boot.pojo.Report;
 import pro.sky.java.course2.hw_spring_boot.repository.ReportRepository;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -31,9 +32,9 @@ public class ReportServiceImplTest {
 
 
     @Test
-    public void shouldCreateReport() {
+    public void shouldCreateReport() throws IOException {
 
-        mockReportRepository.createReport();
+        mockReportServiceImpl.createReport();
         verify(mockReportRepository,times(1)).createReport();
     }
 
