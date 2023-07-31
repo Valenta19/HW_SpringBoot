@@ -38,14 +38,12 @@ public class EmployeeServiceImplTest {
 
     @Test
     public void shouldReturnCollectionOfAllEmployees() {
-        out.getAllEmployees();
         when(mockRepository.getAllEmployees()).thenReturn(EMPLOYEE);
         assertIterableEquals(EMPLOYEE, out.getAllEmployees());
     }
 
     @Test
     public void shouldReturnSalarySum() {
-        out.getSalarySum();
         Double testSalary = Double.valueOf(EMPLOYEE.stream()
                 .map(Employee::getSalary)
                 .reduce(0, Integer::sum));
@@ -55,7 +53,6 @@ public class EmployeeServiceImplTest {
 
     @Test
     public void shouldReturnMinSalary() {
-        out.getMinSalary();
         Optional<Integer> testMinSalary = EMPLOYEE.stream()
                 .map(Employee::getSalary)
                 .min(Comparator.naturalOrder());
@@ -65,7 +62,6 @@ public class EmployeeServiceImplTest {
 
     @Test
     public void shouldReturnMaxSalary() {
-        out.getMaxSalary();
         Optional<Integer> testMaxSalary = EMPLOYEE.stream()
                 .map(Employee::getSalary)
                 .max(Comparator.naturalOrder());
@@ -75,7 +71,6 @@ public class EmployeeServiceImplTest {
 
     @Test
     public void shouldReturnEmployeesWithSalaryHigherThenAvg() {
-        out.getAllEmployeesWithSalaryHigherThenAvg();
         List<Employee> list = EMPLOYEE.stream()
                 .filter(employee -> employee.getSalary() > mockRepository.getSalarySum() / EMPLOYEE.size())
                 .toList();
@@ -107,7 +102,6 @@ public class EmployeeServiceImplTest {
     @Test
     public void shouldReturnAllEmployeesWithSalaryHigherThan() {
         int salary = 10000;
-        out.getAllEmployeesWithSalaryHigherThan(salary);
         List<Employee> list = EMPLOYEE.stream()
                 .filter(employee -> employee.getSalary() > salary)
                 .toList();
@@ -117,7 +111,6 @@ public class EmployeeServiceImplTest {
     @Test
     public void shouldReturnAllEmployeesWithMatchingPosition() {
         int position = 1;
-        out.getAllEmployeesWithMatchingPosition(Integer.toString(position));
         List<Employee> list = EMPLOYEE.stream()
                 .filter(employee -> employee.getPositionId() == position)
                 .toList();
