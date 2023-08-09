@@ -79,7 +79,7 @@ public class AdminEmployeeController {
     }
 
     @GetMapping("/{id}/fullInfo")
-    public List<EmployeeDTO> getEmployeeFullInfo(@PathVariable int id) {
+    public Optional<EmployeeDTO> getEmployeeFullInfo(@PathVariable int id) {
 
         return employeeService.getEmployeeFullInfo(id);
     }

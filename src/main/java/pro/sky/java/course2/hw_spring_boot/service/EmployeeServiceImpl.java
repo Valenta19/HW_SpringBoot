@@ -102,11 +102,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<EmployeeDTO> getEmployeeFullInfo(int id) {
+    public Optional<EmployeeDTO> getEmployeeFullInfo(int id) {
         logger.debug("Full information about employee with id= "+id);
-        return employeeRepository.findById(id).stream()
-                .map(EmployeeDTO::fromEmployee)
-                .collect(Collectors.toList());
+        return employeeRepository.findById(id).stream().map(EmployeeDTO::fromEmployee).findFirst();
 
     }
 
@@ -120,7 +118,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void saveEmployeeFromJson(MultipartFile file) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-
         List<Employee> employees = objectMapper.readValue(file.getBytes(), new TypeReference<>() {
         });
         employeeRepository.saveAll(employees);

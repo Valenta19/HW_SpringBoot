@@ -13,6 +13,11 @@ public class Report {
     @Column(name = "file")
     private String file;
 
+    public Report(Integer id, String file) {
+        this.id = id;
+        this.file = file;
+    }
+
     public Report() {
     }
 
