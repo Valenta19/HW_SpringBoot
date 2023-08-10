@@ -15,7 +15,7 @@ public class Employee implements Serializable {
     private int salary;
 
     @Column(name = "position_id",insertable=false, updatable=false)
-    private int positionId;
+    private Integer positionId;
     @ManyToOne
     @JoinColumn(name = "position_id")
     private Position position;
@@ -23,7 +23,7 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(int id, String name, int salary, int positionId) {
+    public Employee(int id, String name, int salary, Integer positionId, Position position) {
         this.id = id;
         this.name = name;
         this.salary = salary;
@@ -31,11 +31,15 @@ public class Employee implements Serializable {
         this.position = position;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getPositionId() {
         return positionId;
     }
 
-    public void setPositionId(int positionId) {
+    public void setPositionId(Integer positionId) {
         this.positionId = positionId;
     }
 

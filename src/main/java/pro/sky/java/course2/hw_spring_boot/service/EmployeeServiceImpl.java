@@ -62,7 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> addEmployee(Employee employee) {
         logger.debug("Employee added " + employee);
-        return (List<Employee>) employeeRepository.save(employee);
+        return Collections.singletonList(employeeRepository.save(employee));
     }
 
 

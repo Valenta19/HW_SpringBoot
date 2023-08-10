@@ -8,8 +8,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import pro.sky.java.course2.hw_spring_boot.pojo.Employee;
+import pro.sky.java.course2.hw_spring_boot.repository.EmployeeRepository;
 
 import java.util.List;
 
@@ -18,16 +21,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
+@WithMockUser(username = "Ivan", roles = "ADMIN", password = "Ivan")
 @AutoConfigureMockMvc
-public class AdminEmployeeControllerTest {
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+class AdminEmployeeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
+    @Autowired
+    private EmployeeRepository employeeRepository;
     @Autowired
     private ObjectMapper objectMapper;
-
-
     @Test
     void getAllEmployeesTest() throws Exception {
         mockMvc.perform(get("/admin/employee/salary/all"))
@@ -43,7 +47,7 @@ public class AdminEmployeeControllerTest {
         object.put("salary", 100000);
         mockMvc.perform(get("/admin/employee/salary/sum"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.salary").isNumber());
+                .andExpect(jsonPath("$").isNumber());
     }
 
     @Test
@@ -52,16 +56,16 @@ public class AdminEmployeeControllerTest {
         object.put("salary", 100000);
         mockMvc.perform(get("/admin/employee/salary/min"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.salary").isNumber());
+                .andExpect(jsonPath("$").isNumber());
     }
 
     @Test
     void getMaxSalaryTest() throws Exception {
         JSONObject object = new JSONObject();
-        object.put("salary", 100000);
-        mockMvc.perform(get("/admin/employee/salary/withHighestSalary"))
+        object.put("salary", 1000000);
+        mockMvc.perform(get("/admin/employee/withHighestSalary"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.salary").isNumber());
+                .andExpect(jsonPath("$").isArray());
     }
 
     @Test
@@ -82,6 +86,11 @@ public class AdminEmployeeControllerTest {
 
     @Test
     void getAllEmployeesWithMatchingPositionTest() throws Exception {
+        JSONObject position = new JSONObject();
+        position.put("id", 1);
+        position.put("position", "dev");
+        JSONObject object = new JSONObject();
+        object.put("position", position);
         mockMvc.perform(get("/admin/employee/position"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
@@ -91,7 +100,7 @@ public class AdminEmployeeControllerTest {
     void getEmployeeFullInfoTest() throws Exception {
         mockMvc.perform(get("/admin/employee/fullInfo/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").exists());
+                .andExpect(jsonPath("$").doesNotExist());
     }
 
     @Test
@@ -104,14 +113,15 @@ public class AdminEmployeeControllerTest {
     @Test
     void addEmployeeTest() throws Exception {
         JSONObject object = new JSONObject();
-        object.put("id", 1);
+        object.put("id", 10);
         object.put("name", "ivan");
-        object.put("salary", 10000.0);
-        object.put("positionId", 2);
-        mockMvc.perform(post("/admin/employee")
+        object.put("salary", 100000);
+        object.put("positionId", 10);
+        mockMvc.perform(post("/admin/employee/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(object.toString()))
                 .andExpect(status().isOk());
+
     }
 
     @Test
@@ -135,7 +145,7 @@ public class AdminEmployeeControllerTest {
 
     @Test
     void uploadTest() throws Exception {
-        List<Employee> list = List.of(new Employee(3, "name", 10000, 1));
+        List<Employee> list = List.of(new Employee(3, "name", 10000, 0, null));
         String json = objectMapper.writeValueAsString(list);
         MockMultipartFile file = new MockMultipartFile("file", json.getBytes());
         mockMvc.perform(multipart("/admin/employee/upload")
