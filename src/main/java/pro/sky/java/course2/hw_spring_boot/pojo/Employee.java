@@ -35,7 +35,7 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    public int getPositionId() {
+    public Integer getPositionId() {
         return positionId;
     }
 

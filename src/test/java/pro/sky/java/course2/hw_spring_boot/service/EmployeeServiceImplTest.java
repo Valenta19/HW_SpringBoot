@@ -110,7 +110,7 @@ public class EmployeeServiceImplTest {
 
     @Test
     public void shouldReturnAllEmployeesWithMatchingPosition() {
-        int position = 1;
+        Integer position = 1;
         List<Employee> list = EMPLOYEE.stream()
                 .filter(employee -> employee.getPositionId() == position)
                 .toList();

@@ -37,7 +37,7 @@ class AdminEmployeeControllerTest {
         mockMvc.perform(get("/admin/employee/salary/all"))
                 .andExpect(status().isOk())
                 .andExpect( jsonPath("$").isArray())
-                .andExpect(jsonPath("$").isEmpty());
+                .andExpect(jsonPath("$").isNotEmpty());
 
     }
 
@@ -70,11 +70,10 @@ class AdminEmployeeControllerTest {
 
     @Test
     void getSalaryHigherThanAvgTest() throws Exception {
-        JSONObject object = new JSONObject();
-        object.put("salary", 100000);
         mockMvc.perform(get("/admin/employee/high-salary"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.salary").isNumber());
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").isNotEmpty());
     }
 
     @Test
@@ -117,6 +116,7 @@ class AdminEmployeeControllerTest {
         object.put("name", "ivan");
         object.put("salary", 100000);
         object.put("positionId", 10);
+        object.put("position", null);
         mockMvc.perform(post("/admin/employee/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(object.toString()))
@@ -145,7 +145,7 @@ class AdminEmployeeControllerTest {
 
     @Test
     void uploadTest() throws Exception {
-        List<Employee> list = List.of(new Employee(3, "name", 10000, 0, null));
+        List<Employee> list = List.of(new Employee(3, "name", 10000, null,null));
         String json = objectMapper.writeValueAsString(list);
         MockMultipartFile file = new MockMultipartFile("file", json.getBytes());
         mockMvc.perform(multipart("/admin/employee/upload")
