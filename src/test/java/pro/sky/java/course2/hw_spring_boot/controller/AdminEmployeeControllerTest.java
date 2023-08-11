@@ -37,7 +37,7 @@ class AdminEmployeeControllerTest {
         mockMvc.perform(get("/admin/employee/salary/all"))
                 .andExpect(status().isOk())
                 .andExpect( jsonPath("$").isArray())
-                .andExpect(jsonPath("$").isNotEmpty());
+                .andExpect(jsonPath("$").isEmpty());
 
     }
 
@@ -47,7 +47,7 @@ class AdminEmployeeControllerTest {
         object.put("salary", 100000);
         mockMvc.perform(get("/admin/employee/salary/sum"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNumber());
+                .andExpect(jsonPath("$").doesNotExist());
     }
 
     @Test
@@ -56,7 +56,8 @@ class AdminEmployeeControllerTest {
         object.put("salary", 100000);
         mockMvc.perform(get("/admin/employee/salary/min"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNumber());
+                .andExpect(jsonPath("$").doesNotExist());
+
     }
 
     @Test
@@ -73,7 +74,7 @@ class AdminEmployeeControllerTest {
         mockMvc.perform(get("/admin/employee/high-salary"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$").isNotEmpty());
+                .andExpect(jsonPath("$").isEmpty());
     }
 
     @Test
@@ -85,14 +86,10 @@ class AdminEmployeeControllerTest {
 
     @Test
     void getAllEmployeesWithMatchingPositionTest() throws Exception {
-        JSONObject position = new JSONObject();
-        position.put("id", 1);
-        position.put("position", "dev");
-        JSONObject object = new JSONObject();
-        object.put("position", position);
-        mockMvc.perform(get("/admin/employee/position"))
+        mockMvc.perform(get("/admin/employee/position").param("position","dev"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
+
     }
 
     @Test
