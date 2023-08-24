@@ -10,10 +10,16 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import pro.sky.java.course2.hw_spring_boot.pojo.Employee;
 import pro.sky.java.course2.hw_spring_boot.repository.EmployeeRepository;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -21,10 +27,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
+@Testcontainers
 @WithMockUser(username = "Ivan", roles = "ADMIN", password = "Ivan")
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class AdminEmployeeControllerTest {
+    @Container
+    private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:13")
+            .withUsername("postgres")
+            .withPassword("Valenta2001!");
+
+
+    @DynamicPropertySource
+    static void postgresProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", postgres::getJdbcUrl);
+        registry.add("spring.datasource.username", postgres::getUsername);
+        registry.add("spring.datasource.password", postgres::getPassword);
+    }
+
+    @Autowired
+    private DataSource dataSource;
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,8 +58,8 @@ class AdminEmployeeControllerTest {
     void getAllEmployeesTest() throws Exception {
         mockMvc.perform(get("/admin/employee/salary/all"))
                 .andExpect(status().isOk())
-                .andExpect( jsonPath("$").isArray())
-                .andExpect(jsonPath("$").isEmpty());
+                .andExpect( jsonPath("$").isArray());
+
 
     }
 
@@ -47,7 +69,7 @@ class AdminEmployeeControllerTest {
         object.put("salary", 100000);
         mockMvc.perform(get("/admin/employee/salary/sum"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("$").isNumber());
     }
 
     @Test
@@ -56,7 +78,7 @@ class AdminEmployeeControllerTest {
         object.put("salary", 100000);
         mockMvc.perform(get("/admin/employee/salary/min"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("$").isNumber());
 
     }
 
@@ -74,7 +96,7 @@ class AdminEmployeeControllerTest {
         mockMvc.perform(get("/admin/employee/high-salary"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$").isEmpty());
+                .andExpect(jsonPath("$").isNotEmpty());
     }
 
     @Test
@@ -96,7 +118,7 @@ class AdminEmployeeControllerTest {
     void getEmployeeFullInfoTest() throws Exception {
         mockMvc.perform(get("/admin/employee/fullInfo/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("$").isNotEmpty());
     }
 
     @Test

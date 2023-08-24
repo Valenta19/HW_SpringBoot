@@ -1,11 +1,11 @@
 databaseChangeLog:
   - include:
-      file: liquibase/changesets/create_employees.yml
+      file: liquibase/Changesets/create_employees.yml
   - include:
-      file: liquibase/changesets/create_position.yml
+      file: liquibase/Changesets/create_position.yml
   - include:
-      file: liquibase/changesets/create_report.yml
+      file: liquibase/Changesets/create_report.yml
   - include:
-      file: liquibase/changesets/create_users.yml
+      file: liquibase/Changesets/create_users.yml
   - include:
-      file: liquibase/changesets/create_authorities.yml
+      file: liquibase/Changesets/create_authorities.yml

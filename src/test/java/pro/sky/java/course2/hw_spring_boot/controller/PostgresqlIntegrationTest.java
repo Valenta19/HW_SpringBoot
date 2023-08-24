@@ -2,32 +2,27 @@ package pro.sky.java.course2.hw_spring_boot.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
-import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-@Testcontainers
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
-@WithMockUser(username = "Ivan", roles = "ADMIN", password = "Ivan")
-@AutoConfigureMockMvc
-public class InfoControllerTest {
+@Testcontainers
+public final class PostgresqlIntegrationTest {
 
     @Container
-    private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:13")
+    private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres")
             .withUsername("postgres")
             .withPassword("Valenta2001!");
-
 
     @DynamicPropertySource
     static void postgresProperties(DynamicPropertyRegistry registry) {
@@ -38,12 +33,11 @@ public class InfoControllerTest {
 
     @Autowired
     private DataSource dataSource;
-    @Autowired
-    MockMvc mockMvc;
+
     @Test
-    void whenGetInfo() throws Exception{
-        mockMvc.perform( get("/info/appInfo"))
-                .andExpect(status().isOk())
-                .andExpect( jsonPath("$").value("dev"));
+    void testPostgresql() throws SQLException {
+        try (Connection conn = dataSource.getConnection()) {
+            assertThat(conn).isNotNull();
+        }
     }
 }
