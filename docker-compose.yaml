@@ -3,8 +3,7 @@ services:
   database:
     image: postgres:latest
     ports:
-      - 6533:5432
+      - 6433:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Valenta2001!
-      POSTGRES_DB: postgres
