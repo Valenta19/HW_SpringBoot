@@ -10,11 +10,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @SpringBootTest
 @WithMockUser(username = "Ivan", roles = "ADMIN", password = "Ivan")
 @AutoConfigureMockMvc
 public class InfoControllerTest {
+
     @Autowired
     MockMvc mockMvc;
     @Test

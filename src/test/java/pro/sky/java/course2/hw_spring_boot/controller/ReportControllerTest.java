@@ -17,7 +17,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser(username = "Ivan", roles = "ADMIN", password = "Ivan")
 public class ReportControllerTest {
 
-
     @Autowired
     MockMvc mockMvc;
 

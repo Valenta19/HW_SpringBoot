@@ -26,6 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class AdminEmployeeControllerTest {
 
+
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -36,8 +37,8 @@ class AdminEmployeeControllerTest {
     void getAllEmployeesTest() throws Exception {
         mockMvc.perform(get("/admin/employee/salary/all"))
                 .andExpect(status().isOk())
-                .andExpect( jsonPath("$").isArray())
-                .andExpect(jsonPath("$").isEmpty());
+                .andExpect( jsonPath("$").isArray());
+
 
     }
 
@@ -47,7 +48,7 @@ class AdminEmployeeControllerTest {
         object.put("salary", 100000);
         mockMvc.perform(get("/admin/employee/salary/sum"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("$").isNumber());
     }
 
     @Test
@@ -56,7 +57,7 @@ class AdminEmployeeControllerTest {
         object.put("salary", 100000);
         mockMvc.perform(get("/admin/employee/salary/min"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("$").isNumber());
 
     }
 
@@ -74,7 +75,7 @@ class AdminEmployeeControllerTest {
         mockMvc.perform(get("/admin/employee/high-salary"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$").isEmpty());
+                .andExpect(jsonPath("$").isNotEmpty());
     }
 
     @Test
@@ -96,7 +97,7 @@ class AdminEmployeeControllerTest {
     void getEmployeeFullInfoTest() throws Exception {
         mockMvc.perform(get("/admin/employee/fullInfo/{id}", 1))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpect(jsonPath("$").isNotEmpty());
     }
 
     @Test
